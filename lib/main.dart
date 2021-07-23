@@ -251,6 +251,10 @@ class _Login extends State<Login> {
 }
 
 class SignUp extends StatefulWidget {
+
+
+
+
   @override
   State<SignUp> createState() => _SignUp();
 }
@@ -434,23 +438,16 @@ class _SignUp extends State<SignUp> {
 }
 
 class Main extends StatefulWidget {
+
+
+
   @override
   State<Main> createState() => _Main();
 }
 
 class _Main extends State<Main> {
-
-  int _selectedIndex = 0;
-
-
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-
+  bool isPressed = false;
+  bool ispressed = false;
 
   @override
   Widget build(BuildContext context){
@@ -476,9 +473,8 @@ class _Main extends State<Main> {
         ),
        ],
       ),
-        body:
-        Column(
-          children: [
+        body: Column(
+          children: <Widget> [
             SizedBox(
               height: 120,
               child: Container(
@@ -489,8 +485,8 @@ class _Main extends State<Main> {
                     Column(
                       children: [
                         Container(
-                          width: 100,
-                          height: 50,
+                          width: 90,
+                          height: 100,
 
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -505,12 +501,15 @@ class _Main extends State<Main> {
                         Text('Your Story'),
                       ],
                     ),
+                    SizedBox(
+                      width:10,
+                    ),
 
                     Column(
                       children: [
                         Container(
-                          width: 100,
-                          height: 50,
+                          width: 90,
+                          height: 100,
 
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -524,12 +523,14 @@ class _Main extends State<Main> {
                       ],
 
                     ),
-
+                    SizedBox(
+                      width:10,
+                    ),
                     Column(
                       children: [
                         Container(
-                          width: 100,
-                          height: 50,
+                          width: 90,
+                          height: 100,
 
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -542,11 +543,14 @@ class _Main extends State<Main> {
                         Text('leone123'),
                       ],
                     ),
+                    SizedBox(
+                      width:10,
+                    ),
                     Column(
                       children: [
                         Container(
-                          width: 100,
-                          height: 50,
+                          width: 90,
+                          height: 100,
 
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -559,12 +563,14 @@ class _Main extends State<Main> {
                         Text('shergill'),
                       ],
                     ),
-
+                    SizedBox(
+                      width:10,
+                    ),
                     Column(
                       children: [
                         Container(
-                          width: 100,
-                          height: 50,
+                          width: 90,
+                          height: 100,
 
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -587,103 +593,283 @@ class _Main extends State<Main> {
               ),
 
             ),
-            SafeArea(
-                child: SingleChildScrollView(
-                child: Column(
-                children: <Widget>[
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16.0, 16.0, 8.0, 16.0),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  height: 40.0,
-                                  width: 40.0,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: NetworkImage('https://newevolutiondesigns.com/images/freebies/cool-wallpaper-6.jpg'),
-                                        fit: BoxFit.fill,
-                                      )
-                                  ),
-                                ),
-                                Text(
-                                    '     im_pathak'
-                                ),
-                              ]
-                          ),
-                        ),
-                        SizedBox(
-                          child: Flexible(
-                            fit: FlexFit.loose,
-                            child: Image.network('https://newevolutiondesigns.com/images/freebies/cool-wallpaper-10.jpg',
-                              fit: BoxFit.cover,),
-                          ),
-                        ),
-                        //3
-                        Padding(padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.favorite_border,
-                                ),
-                                SizedBox(width: 10,),
-                                Icon(
-                                  Icons.chat_bubble_outline,
-                                ),
-                                SizedBox(width: 10,),
-                                Icon(
-                                  Icons.send,
-                                ),
-                              ]
-                          ),
-                        ),
-                        Padding(padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  height: 40.0,
-                                  width: 40.0,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: NetworkImage('https://newevolutiondesigns.com/images/freebies/cool-wallpaper-6.jpg'),
-                                        fit: BoxFit.fill,
-                                      )
-                                  ),
-                                ),
-                                Text(
-                                    '    Liked by pawankumar, preeti456 and 528 others'
-                                ),
-                              ]
-                          ),
-                        )
+            Expanded(
+              child: new Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 15.0),
+                  child: Divider(
+                    color: Colors.black,
+                    height: 50,
+                  )),
+            ),
 
-                      ]
-                  ),
+    Column(
+      children: [
+        Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+        Container(
+        height: 50,
+        padding: EdgeInsets.fromLTRB(8, 5, 8, 5),
+        width: double.infinity,
+        child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+        Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+        Container(
+        height: 40,
+        width: 40,
+        margin: const EdgeInsets.all(3),
+        decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        image: DecorationImage(
+          image: NetworkImage('https://newevolutiondesigns.com/images/freebies/cool-wallpaper-6.jpg'),
+          fit: BoxFit.fill,)),
+        ),
+        ]),
+        SizedBox(
+        width: 6,
+        ),
+        Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+        Text('im_pathak',
+          textAlign: TextAlign.start,
+        style: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+        color: Colors.black,
+        letterSpacing: 1,)),
+        Text(
+        'Canada',
+          textAlign: TextAlign.start,
+        style: TextStyle(
+        fontSize: 13,
+        fontWeight: FontWeight.w400,
+        color: Colors.black),
+        ),
+        ],
+        ),
+        ],
+        ),
+        ),
 
+        Flexible(
+        fit: FlexFit.loose,
+        child: Image.network('https://newevolutiondesigns.com/images/freebies/cool-wallpaper-10.jpg',
+        fit: BoxFit.cover,
+        ),
+        ),
+        Padding(
+        padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
+        child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+        Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+        IconButton(
+        icon: Icon(
+        isPressed ? Icons.favorite : Icons.favorite),
+        color: isPressed ? Colors.red : Colors.black,
+        iconSize: 24,
+        onPressed: () {
+        setState(() {
+        isPressed = !isPressed;
+        });
+        if (isPressed == true) {
+        SnackBar mySnackbar = SnackBar(
+        content: Text(
+        "You Have Liked the Post",
+        style: TextStyle(color: Colors.blue, fontSize: 16),
+        textAlign: TextAlign.center,
+        ),
+        width: 300.0,
+        backgroundColor: Colors.white,
+        duration: Duration(milliseconds: 2000),
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0)),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(mySnackbar);
+        }
+        },
+        ),
+        Icon(Icons.comment, size: 24,),
+        SizedBox(
+        width: 8,
+        ),
+        Icon(Icons.send, size: 24,),
+        ],
+        ),
+        IconButton(
+        icon: Icon(
+        ispressed ? Icons.bookmark : Icons.bookmark),
+        color: Colors.black,
+        iconSize: 24,
+        onPressed: () {
+        setState(() {
+        ispressed = !ispressed;
+        });
+        if (ispressed == true) {
+        SnackBar mySnackbar = SnackBar(
+        content: Text(
+        "Saved to Collection",
+        style: TextStyle(color: Colors.blue, fontSize: 16),
+        textAlign: TextAlign.center,
+        ),
+        width: 300.0,
+        backgroundColor: Colors.white,
+        duration: Duration(milliseconds: 2000),
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0)),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(mySnackbar);
+        }
+        },
+        ),
+        ],
+        ),
+        ),
+        Padding(
+        padding: const EdgeInsets.fromLTRB(10, 2, 10, 1),
+        child: Row(
+        children: [
+        Text(
+        "Liked by Sameer08, _raghav121 and 44,686 others",
+        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+        textAlign: TextAlign.start,
+        ),
+        ],
+        ),
+        ),
+        Padding(
+        padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+        child: Row(
+        children: [
+        Text(
+        'im_pathak',
+          textAlign: TextAlign.start,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        SizedBox(
+        width: 8,
+        ),
 
-
-                ]
-                )
-                )
-            )
-
-          ],
+        ],
+        ),
+        ),
+        Padding(
+        padding: const EdgeInsets.fromLTRB(10, 2, 10, 3),
+        child: Row(
+        children: [
+        Text(
+        "1 Day Ago",
+        style: TextStyle(fontSize: 11, color: Colors.grey),
+        ),
+        ],
+        ),
+        )
+        ],
         ),
 
 
 
+      ],
+    )
 
 
 
+
+         /*   ListView(
+                scrollDirection: Axis.vertical,
+                children: <Widget>[Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16.0, 16.0, 8.0, 16.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                height: 40.0,
+                                width: 40.0,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: NetworkImage('https://newevolutiondesigns.com/images/freebies/cool-wallpaper-6.jpg'),
+                                      fit: BoxFit.fill,
+                                    )
+                                ),
+                              ),
+                              Text(
+                                  '     im_pathak'
+                              ),
+                            ]
+                        ),
+                      ),
+                      SizedBox(
+                        child: Flexible(
+                          fit: FlexFit.loose,
+                          child: Image.network('https://newevolutiondesigns.com/images/freebies/cool-wallpaper-10.jpg',
+                            fit: BoxFit.cover,),
+                        ),
+                      ),
+//3
+                      Padding(padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Icon(
+                                Icons.favorite_border,
+                              ),
+                              SizedBox(width: 10,),
+                              Icon(
+                                Icons.chat_bubble_outline,
+                              ),
+                              SizedBox(width: 10,),
+                              Icon(
+                                Icons.send,
+                              ),
+                            ]
+                        ),
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                height: 40.0,
+                                width: 40.0,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: NetworkImage('https://newevolutiondesigns.com/images/freebies/cool-wallpaper-6.jpg'),
+                                      fit: BoxFit.fill,
+                                    )
+                                ),
+                              ),
+                              Text(
+                                  '    Liked by pawankumar, preeti and 528 others'
+                              ),
+                            ]
+                        ),
+                      )
+
+                    ]
+                ),
+
+                ] ),*/
+          ]
+        ),
 
       bottomNavigationBar: new Container(
         color: Colors.white,
@@ -724,3 +910,7 @@ class _Main extends State<Main> {
         );
   }
 }
+
+
+
+
