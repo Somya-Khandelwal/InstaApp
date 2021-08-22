@@ -7,37 +7,11 @@ class Login extends StatefulWidget {
 }
 
 class _Login extends State<Login> {
-  /*TextEditingController _emailField = TextEditingController();
-  TextEditingController _passwordField = TextEditingController();*/
-  final formKey = new GlobalKey<FormState>();
+
   late String _emailField;
   late String _passwordField;
 
-  bool validateAndSave() {
-    final form = formKey.currentState;
-    if (form!.validate()) {
-      form.save();
-      //print('Valid. Email: $_emailField, password: $_passwordField');}
-      return true;
-    }
-    return false;
-    /*  else{
-      print('Invalid. Email: $_emailField, password: $_passwordField');
-    }*/
-  }
-
-  void validateAndSubmit() async {
-    if (validateAndSave()) {
-      try {
-        final UserCredential user = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-                email: _emailField, password: _passwordField);
-        print('Signed in: ${user.user!.uid}');
-      } catch (e) {
-        print('Error: $e');
-      }
-    }
-  }
+  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -68,45 +42,49 @@ class _Login extends State<Login> {
             SizedBox(
               height: 30,
             ),
+
             SizedBox(
-              width: 320,
+              width:320,
               height: 40,
-              child: TextFormField(
-                //controller: _emailField,
-                validator: (value) =>
-                    value!.isEmpty ? "Email can't be empty" : null,
-                onSaved: (value) => _emailField = value!,
+              child: TextField(
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintText: 'something@email.com',
                   border: OutlineInputBorder(),
-                  labelText: 'Username',
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  labelText: 'Email ID',
+                  contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                 ),
+                onChanged: (value){
+                  setState(() {
+                    _emailField = value.trim();
+
+                  });
+                },
+
               ),
             ),
             SizedBox(
               height: 5,
             ),
             SizedBox(
-              width: 320,
+              width:320,
               height: 40,
-              child: TextFormField(
-                // controller: _passwordField,
-                validator: (value) =>
-                    value!.isEmpty ? "Password can't be empty" : null,
-                onSaved: (value) => _passwordField = value!,
+              child: TextField(
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintText: 'enter 8 digit password',
                   border: OutlineInputBorder(),
                   labelText: 'Password',
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                 ),
+                onChanged: (value){
+                  setState(() {
+                    _passwordField = value.trim();
+
+                  });
+                },
+
               ),
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -128,10 +106,10 @@ class _Login extends State<Login> {
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.blue,
                 ),
-                onPressed: validateAndSubmit,
-                /*(){
+                onPressed: (){
+                  auth.signInWithEmailAndPassword(email: _emailField,password: _passwordField );
                   Navigator.pushNamed(context,'/Main');
-                },*/
+                },
                 child: Text('Log In',
                     style: TextStyle(
                       color: Colors.white,
@@ -195,3 +173,4 @@ class _Login extends State<Login> {
     );
   }
 }
+

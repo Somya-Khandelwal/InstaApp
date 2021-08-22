@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:untitled2/dm.dart';
 import 'package:untitled2/login.dart';
 import 'package:untitled2/mainactual.dart';
 import 'package:untitled2/signup.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       '/SignUp': (context) => SignUp(),
       '/Main': (context) => Main(),
       '/Home': (context) => Home(),
+      '/dm':(context)=> Dm(),
     });
   }
 }

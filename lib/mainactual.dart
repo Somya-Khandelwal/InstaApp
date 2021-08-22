@@ -34,8 +34,14 @@ class _Main extends State<Main> {
             children: [Icon(CupertinoIcons.tv,
               color: Colors.black,),
               SizedBox(width: 10,),
-              Icon(Icons.send_outlined,
-                color: Colors.black,),
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/dm');
+                },
+                icon: Icon(Icons.send_outlined,
+                    color: Colors.black),
+
+              ),
             ],
           ),
         ],

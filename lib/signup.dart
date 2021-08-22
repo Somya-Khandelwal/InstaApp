@@ -1,18 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'dart:core';
+
+import 'package:untitled2/mainactual.dart';
 
 class SignUp extends StatefulWidget {
-
-
-
-
   @override
   State<SignUp> createState() => _SignUp();
 }
 class _SignUp extends State<SignUp> {
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+
+  late String _emailField;
+  late String _passwordField;
+
+  final auth = FirebaseAuth.instance;
+  bool? _success;
+  String? _userEmail;
+
 
   @override
   Widget build(BuildContext context){
@@ -64,7 +68,12 @@ class _SignUp extends State<SignUp> {
                   labelText: 'Password',
                   contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                 ),
+                onChanged: (value){
+                  setState(() {
+                    _passwordField = value.trim();
 
+                  });
+                },
               ),
             ),
             SizedBox(
@@ -96,6 +105,13 @@ class _SignUp extends State<SignUp> {
                   labelText: 'Email ID',
                   contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                 ),
+                onChanged: (value){
+                  setState(() {
+                    _emailField = value.trim();
+
+                  });
+                },
+
 
               ),
             ),
@@ -112,8 +128,10 @@ class _SignUp extends State<SignUp> {
                   backgroundColor: Colors.blue,
 
                 ),
-                onPressed: (){
-                  Navigator.pushNamed(context,'/Main');
+                onPressed: () async{
+                  await _register();
+                  await Navigator.pushNamed(
+                      context,'/Main');
                 },
                 child: Text('SignUp',
                     style: TextStyle(
@@ -185,4 +203,19 @@ class _SignUp extends State<SignUp> {
       ),
     );
   }
+  Future<void> _register() async {
+    final User? user = (await auth.createUserWithEmailAndPassword(
+      email: _emailField,
+      password: _passwordField,
+    ))
+        .user;
+    if (user != null) {
+      setState(() {
+        _success = true;
+        _userEmail = user.email;
+      });
+    }
+  }
+
+
 }
