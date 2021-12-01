@@ -1,16 +1,27 @@
-# untitled2
+## Instagram Clone
 
-A new Flutter project.
 
-## Getting Started
+- Developing a clone of the Instagram app using flutter SDK, dart as language and firebase for authentication.
+- Framed UI using Widgets such as Images, Buttons, Icons, Bottom Navigation Bar and Snackbar.
+- Implemented features such as Scrolling and Navigation.
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+Android Studio: Download and Install it using - https://developer.android.com/studio and do the required configuration for testing the project based on device specifications using android emulator or physical device.
+  
+### Installation
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+1. Clone the repository
+   
+```sh
+git clone https://github.com/Somya-Khandelwal/InstaApp.git
+```
+   
+   
+ 2. Open the project using Android Studio, and run the project.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Functionalities
+
+1. Individual can Login/SignUp using their unique credentials.
+2. User can publish and view Stories and Posts.
+
