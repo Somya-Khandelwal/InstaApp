@@ -1,176 +1,208 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_signin_button/button_view.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'Home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Login extends StatefulWidget {
+import 'insta_list.dart';
+
+var email;
+class Login extends StatefulWidget{
   @override
-  State<Login> createState() => _Login();
+  _LoginState createState() => _LoginState();
 }
 
-class _Login extends State<Login> {
-
-  late String _emailField;
-  late String _passwordField;
-
+class _LoginState extends State<Login> {
+  String? _email, _password;
+  String username='';
+  String fullname = '';
+  String Bio= '';
+  String caption='';
   final auth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          color: Colors.black,
-          onPressed: () {
-            Navigator.pushNamed(context, '/Home');
-          },
+        title: Text(
+          ' ',
+          style: TextStyle(
+            fontSize: 15,
+            color: Colors.black,
+          ),
+
         ),
+        leading: BackButton(
+            color: Colors.black
+        ),
+        backgroundColor: Colors.white,
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
-          children: [
-            SizedBox(
-              height: 50,
-            ),
-            SizedBox(
-              width: 320,
-              height: 70,
-              child: Image(
-                image: AssetImage('assets/instalogo.jpg'),
-              ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-
-            SizedBox(
-              width:320,
-              height: 40,
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email ID',
-                  contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+            children: <Widget>[
+              SizedBox(height: 50),
+              SizedBox(
+                height:200,
+                child: Image(
+                    image: NetworkImage('https://assets.turbologo.com/blog/en/2019/09/19084953/instagram-logo-illustration-958x575.png')
                 ),
-                onChanged: (value){
-                  setState(() {
-                    _emailField = value.trim();
+              ),
 
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Username',
+                      hintText: 'Enter Your Name',
+                    ),
+                    onChanged: (value){
+                      setState(() {
+                        _email = value.trim();
+                      });
+                    }
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Password',
+                      hintText: 'Enter Password',
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _password = value.trim();
+                      });
+                    }
+                ),
+              ),
+              Text(
+                '                                                                 Forgot password?',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.blue,
+
+                ),
+              ),
+              SizedBox(height: 50),
+              ElevatedButton(
+                // Within the `FirstScreen` widget
+                onPressed: () {
+
+                  // Navigate to the second screen using a named route.
+                  auth.signInWithEmailAndPassword(email: _email!, password: _password!)
+                      .then((value) async {
+
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setString('email', _email!);
+                    email = _email!;
+                    CollectionReference users = FirebaseFirestore.instance.collection('users');
+                    DocumentSnapshot ds= await users.doc (email).get();
+                    instalistusername= ds.get('username');
+                    Navigator.pushReplacement<void, void>(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => Home(fullname:ds.get('fullname'),  username: ds.get('username'), Bio: ds.get('Bio'),email: ds.get('email'), caption: ds.get('caption')),
+                      ),
+                    );
+                  })
+                      .catchError((err){
+                    print(err);
                   });
                 },
-
+                child: Text('Log in'),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 170, vertical: 15),),
+                    textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
               ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              width:320,
-              height: 40,
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                  contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
-                ),
-                onChanged: (value){
-                  setState(() {
-                    _passwordField = value.trim();
-
+              SizedBox(height: 30),
+              SignInButton(
+                Buttons.Google,
+                onPressed: () async{
+                  //TODO: Adding google sign in
+                  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+                  final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+                  final credential = GoogleAuthProvider.credential(
+                    accessToken: googleAuth.accessToken,
+                    idToken: googleAuth.idToken,
+                  );
+                  await FirebaseAuth.instance.signInWithCredential(credential)
+                      .then((value) async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setString('email', googleUser.email);
+                    email = googleUser.email;
+                    Navigator.pushReplacement<void, void>(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => Home(fullname:fullname, Bio: Bio, username: username, email: email, caption: caption,),
+                      ),
+                    );
+                  })
+                      .catchError((err) {
+                    print(err);
                   });
-                },
 
-              ),
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Text(
-                  'Forgot Password?      ',
-                  style: TextStyle(
-                    fontFamily: 'RobotoCondensedItalic',
-                    color: Colors.blue,
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            SizedBox(
-              width: 320,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                ),
-                onPressed: (){
-                  auth.signInWithEmailAndPassword(email: _emailField,password: _passwordField );
-                  Navigator.pushNamed(context,'/Main');
                 },
-                child: Text('Log In',
-                    style: TextStyle(
-                      color: Colors.white,
-                    )),
               ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: new Container(
-                      margin: const EdgeInsets.only(left: 10.0, right: 15.0),
-                      child: Divider(
-                        color: Colors.black,
-                        height: 50,
-                      )),
+              Text(
+                '-------------------   OR   ------------------',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey,
                 ),
-                Text("OR"),
-                Expanded(
-                  child: new Container(
-                      margin: const EdgeInsets.only(left: 15.0, right: 10.0),
-                      child: Divider(
-                        color: Colors.black,
-                        height: 50,
-                      )),
+              ),
+              SizedBox(height: 20),
+              Row(
+                  children: <Widget>[
+                    SizedBox(width: 10),
+                    Text(
+                      "                     Don't have an account?",
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    TextButton(
+                      // Within the `FirstScreen` widget
+                      onPressed: () {
+                        // Navigate to the second screen using a named route.
+                        Navigator.pushNamed(context, '/Signup');
+                      },
+                      child: Text('Sign Up'),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.white24),
+                          padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 10, vertical: 10),),
+                          textStyle: MaterialStateProperty.all(TextStyle(fontSize:  15))),
+                    ),
+                  ]
+              ),
+              SizedBox(height: 50),
+              Text(
+                '--------------------------------------------',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey,
                 ),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: Row(
-                    children: [
-                      Text("                         Don't have an account? "),
-                      new GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/SignUp');
-                          },
-                          child: new Text(
-                            "Sign up.",
-                            style: TextStyle(
-                              color: Colors.blue,
-                            ),
-                          )),
-                    ],
-                  ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Instagram by Facebook',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey,
                 ),
-                SizedBox(
-                  height: 130,
-                ),
-                Center(
-                  child: SizedBox(
-                    child: Card(child: Text('Instagram OT Facebook')),
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ]
+
         ),
       ),
     );
   }
 }
-

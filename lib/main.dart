@@ -1,88 +1,61 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:untitled2/dm.dart';
-import 'package:untitled2/login.dart';
-import 'package:untitled2/mainactual.dart';
-import 'package:untitled2/signup.dart';
+import 'package:flutter/material.dart';
+import 'package:first_app/LoginSignup.dart';
+import 'Dm.dart';
+import 'Fav.dart';
+import 'Home.dart';
+import 'Login.dart';
+import 'Profile.dart';
+import 'Search.dart';
+import 'Signup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Upload.dart';
+
+var email;
 Future<void> main() async {
+  String username='';
+  String fullname = '';
+  String Bio= '';
+  String Website= '';
+  String caption='';
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp(
-    initialRoute: '/Home',
-  ));
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  email = prefs.getString('email');
+  runApp(
+    MaterialApp(
+      title: 'InstaUI',
+      // Start the app with the "/" named route. In this case, the app starts
+      // on the FirstScreen widget.
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginSignup(),
+        '/Login' : (context) => Login(),
+        '/Signup' : (context) => Signup(),
+        '/Home' : (context) => Home(fullname:fullname,username: username, Bio : Bio, email:email, caption:caption ),
+        '/Profile' : (context) => Profile(fullname:fullname, username: username, Bio: Bio,  email:email, Website: Website ),
+        '/Search': (context) => Search(),
+        '/Dm':  (context) => Dm( username: username),
+        '/Fav':  (context) => Fav(),
+        '/Upload': (context) => UploadWidget(email: email, username: username,caption:caption),
+
+      },
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  final String initialRoute;
 
-  MyApp({required this.initialRoute});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(initialRoute: initialRoute, routes: {
-      '/Login': (context) => Login(),
-      '/SignUp': (context) => SignUp(),
-      '/Main': (context) => Main(),
-      '/Home': (context) => Home(),
-      '/dm':(context)=> Dm(),
-    });
-  }
-}
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Center(
-            child: SizedBox(
-              width: 300,
-              height: 400,
-              child: Image(
-                image: AssetImage('assets/instalogo.jpg'),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 320,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.blue,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/Login');
-              },
-              child: Text('Log In',
-                  style: TextStyle(
-                    color: Colors.white,
-                  )),
-            ),
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          SizedBox(
-            width: 320,
-            child: OutlinedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/SignUp');
-              },
-              child: Text('Sign Up'),
-            ),
-          ),
-          SizedBox(
-            height: 50,
-          ),
-        ],
-      ),
-    );
-  }
-}
+
+
+
+
+
+
+
+
+
